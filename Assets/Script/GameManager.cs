@@ -26,17 +26,17 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // 게임오버가 아닌동안
-        if(!isGameover)
+        if (!isGameover)
         {
             // 생존 시간 갱신
             suviveTime += Time.deltaTime;
             // 갱신한 생존 시간을 타임텍스트 컴포넌트를이용해 표시
-            timeText.text = "Time" + (int)suviveTime;
+            timeText.text = "Time : " + (int)suviveTime;
         }
         else
         {
             // 게임오버 상태에서 r을 누를시
-            if(Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 // 샘플신을 로드
                 SceneManager.LoadScene("SampleScene");
@@ -51,5 +51,19 @@ public class GameManager : MonoBehaviour
         isGameover = true;
         // 게임오버 텍스트를 활성화
         gameovertext.SetActive(true);
+
+        // 베스트타임 키로 저장된 이전의 최고기록 가져오기
+        float bestTime = PlayerPrefs.GetFloat("BestTime");
+
+        //이전까지의 최고 기록보다 현재 생존시간이 더크다면
+        if (suviveTime > bestTime)
+        {
+            // 최고기록값을 현재 생존시간으로 변경
+            bestTime = suviveTime;
+            //변경된 최고기록을 베스트타임으로 저장
+            PlayerPrefs.SetFloat("BestTime", bestTime);
+        }
+        //최고 기록을 레코드 텍스트 컴포넌트를 이용해 표시
+        recodeText.text = "BestTime" + (int)bestTime;
     }
 }

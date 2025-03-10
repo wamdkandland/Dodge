@@ -28,5 +28,11 @@ public class PlayerController : MonoBehaviour
     {
         // 자신의 게임 오브젝트를 비활성화
         gameObject.SetActive(false);
+
+        // 씬에 존재하는 게임매니저 타입의 오브젝트를찾아서 가져오기
+        GameManager gamemanager = FindAnyObjectByType<GameManager>();
+
+        // 가져온 게임매니저 오브젝트의 엔드게임 매서드 실행
+        gamemanager.endGame();
     }
 }
